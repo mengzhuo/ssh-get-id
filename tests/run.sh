@@ -2,4 +2,4 @@
 
 set -xe
 
-go run ../main.go -l NONE -o - gh:mengzhuo | grep "#ssh-get-id gh:mengzhuo"
+ssh-get-id -l NONE -o - gh:mengzhuo | grep "#ssh-get-id gh:mengzhuo"
