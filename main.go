@@ -17,12 +17,15 @@ import (
 func getDefaultSSHPath() string {
 	home, _ := os.UserHomeDir()
 	sshPath := filepath.Join(home, ".ssh")
+	sf := filepath.Join(home, ".ssh", "authorized_keys")
 	stat, err := os.Stat(sshPath)
 	if err != nil && os.IsNotExist(err) {
 		os.MkdirAll(filepath.Join(home, ".ssh"), 0700)
+		return sf
 	}
+
 	if stat.IsDir() {
-		return filepath.Join(home, ".ssh", "authorized_keys")
+		return sf
 	} else {
 		return ""
 	}
