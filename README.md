@@ -17,6 +17,11 @@ ssh-get-id uses short prefix to indicate the location of the online identity. Fo
 'gl:' for Gitlab
 'lp:' for Launchpad
 ```
+For example
+```
+ssh-get-id gh:mengzhuo
+```
+
 ```
 Usage of ssh-get-id [-h] [-o FILE] USERID [USERID ...]:
   -l string

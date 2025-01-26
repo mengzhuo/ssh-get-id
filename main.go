@@ -16,7 +16,16 @@ import (
 
 func getDefaultSSHPath() string {
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".ssh", "authorized_keys")
+	sshPath := filepath.Join(home, ".ssh")
+	stat, err := os.Stat(sshPath)
+	if err != nil && os.IsNotExist(err) {
+		os.MkdirAll(filepath.Join(home, ".ssh"), 0700)
+	}
+	if stat.IsDir() {
+		return filepath.Join(home, ".ssh", "authorized_keys")
+	} else {
+		return ""
+	}
 }
 
 var (
@@ -86,7 +95,11 @@ func main() {
 	if *output == "-" {
 		target = os.Stdout
 	} else {
-		out, err := os.OpenFile(*output, os.O_WRONLY|os.O_TRUNC, 0600)
+		p := *output
+		if p == "" {
+			p = getDefaultSSHPath()
+		}
+		out, err := os.OpenFile(p, os.O_WRONLY|os.O_TRUNC, 0600)
 		if err != nil {
 			log.Fatal(err)
 		}

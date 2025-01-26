@@ -26,4 +26,6 @@ jobs:
         go build -o /usr/local/bin/ssh-get-id main.go
 
     - name: Test
-      run: bash ./tests/run.sh
+      run: |
+        bash ./tests/run.sh
+        bash ./tests/gh.sh
