@@ -13,6 +13,7 @@ Usage
 ssh-get-id uses short prefix to indicate the location of the online identity. For now, these are:
 
 ```
+'cb:' for Codeberg
 'gh:' for Github
 'gl:' for Gitlab
 'lp:' for Launchpad

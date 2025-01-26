@@ -148,6 +148,7 @@ type Source interface {
 }
 
 var SourceTable = map[string]Source{
+	"cb": httpSource("https://codeberg.org/%s.keys"),
 	"gh": httpSource("https://github.com/%s.keys"),
 	"gl": httpSource("https://gitlab.com/%s.keys"),
 	"lp": httpSource("https://launchpad.net/~%s/+sshkeys"),
