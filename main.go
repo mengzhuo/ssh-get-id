@@ -102,13 +102,15 @@ func main() {
 		if p == "" {
 			p = getDefaultSSHPath()
 		}
-		out, err := os.OpenFile(p, os.O_WRONLY|os.O_TRUNC, 0600)
+
+		out, err := os.OpenFile(p, os.O_TRUNC|os.O_WRONLY|os.O_CREATE, 0600)
 		if err != nil {
 			log.Fatal(err)
 		}
 		target = out
-		defer out.Close()
+		defer out.Sync()
 	}
+
 	for _, e := range localKeys.List {
 		_, err = fmt.Fprintln(target, e)
 		if err != nil {
@@ -132,6 +134,9 @@ func getLocalKeys() (*KeyTable, error) {
 
 	data, err := os.ReadFile(path)
 	if err != nil {
+		if os.IsNotExist(err) {
+			return kt, nil
+		}
 		return nil, err
 	}
 	err = kt.parseKeys(data)
