@@ -7,6 +7,12 @@ Works on Windows and Mac too!
 
 Currently supported identities include Github, Gitlab, Launchpad.
 
+Install
+----
+
+- Download from release page https://github.com/mengzhuo/ssh-get-id/releases
+- build from source `go install github.com/mengzhuo/ssh-get-id@latest`
+
 Usage
 ----
 
