@@ -152,6 +152,7 @@ var SourceTable = map[string]Source{
 	"gh": httpSource("https://github.com/%s.keys"),
 	"gl": httpSource("https://gitlab.com/%s.keys"),
 	"lp": httpSource("https://launchpad.net/~%s/+sshkeys"),
+	"st": httpSource("https://meta.sr.ht/~%s.keys"),
 }
 
 type KeyTable struct {
