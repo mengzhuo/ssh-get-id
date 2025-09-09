@@ -5,7 +5,7 @@ Same as ssh-import-id (also inspired by), but don't require ssh or python!
 
 Works on Windows and Mac too!
 
-Currently supported identities include Github, Gitlab, Launchpad.
+Currently supported identities include Github, Gitlab, Launchpad, Codeberg and sourcehut.
 
 Install
 ----
@@ -23,6 +23,7 @@ ssh-get-id uses short prefix to indicate the location of the online identity. Fo
 'gh:' for Github
 'gl:' for Gitlab
 'lp:' for Launchpad
+'st:' for sourcehut
 ```
 For example
 ```
