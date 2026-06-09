@@ -31,18 +31,18 @@ func TestHTTPSourceGet(t *testing.T) {
 }
 
 func TestHTTPSourceGetError(t *testing.T) {
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 	}))
 	defer srv.Close()
 
 	hs := HTTPSource(srv.URL + "/%s.keys")
-	data, err := hs.Get("nonexistent")
-	if err != nil {
-		t.Fatal(err)
+	_, err := hs.Get("nonexistent")
+	if err == nil {
+		t.Fatal("expected error for 404 response")
 	}
-	if len(data) != 0 {
-		t.Errorf("expected empty body for 404, got %d bytes", len(data))
+	if !strings.Contains(err.Error(), "404") {
+		t.Errorf("error should mention status code, got: %v", err)
 	}
 }
 

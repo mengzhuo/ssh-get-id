@@ -27,8 +27,8 @@ type commentKey struct {
 	comment string
 }
 
-func (k *commentKey) Type() string                              { return k.pub.Type() }
-func (k *commentKey) Marshal() []byte                           { return k.pub.Marshal() }
+func (k *commentKey) Type() string                                 { return k.pub.Type() }
+func (k *commentKey) Marshal() []byte                              { return k.pub.Marshal() }
 func (k *commentKey) Verify(data []byte, sig *ssh.Signature) error { return k.pub.Verify(data, sig) }
 
 func keyLine(t *testing.T, key ssh.PublicKey, comment string) string {
@@ -181,7 +181,7 @@ func TestMergeKeysWarnSuppressed(t *testing.T) {
 	key1 := newTestKey(t, "original")
 	warnCalled := false
 
-	Warn = func(e *Entry) { warnCalled = true }
+	Warn = func(_ *Entry) { warnCalled = true }
 	defer func() { Warn = nil }()
 
 	kt1 := NewKeyTable()

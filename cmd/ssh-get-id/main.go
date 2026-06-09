@@ -1,3 +1,5 @@
+// Command ssh-get-id fetches SSH public keys from online identity providers
+// and merges them into the local authorized_keys file.
 package main
 
 import (
@@ -63,7 +65,7 @@ func main() {
 			log.Fatal(err)
 		}
 		target = out
-		defer out.Sync()
+		defer func() { _ = out.Sync() }()
 	}
 
 	for _, e := range localKeys.List {
@@ -80,7 +82,7 @@ func getDefaultSSHPath() string {
 	sf := filepath.Join(home, ".ssh", "authorized_keys")
 	stat, err := os.Stat(sshDir)
 	if err != nil && os.IsNotExist(err) {
-		os.MkdirAll(filepath.Join(home, ".ssh"), 0700)
+		_ = os.MkdirAll(filepath.Join(home, ".ssh"), 0700)
 		return sf
 	}
 
@@ -118,15 +120,13 @@ func getRemoteKeys() (*sshgetid.KeyTable, error) {
 
 	for _, arg := range flag.Args() {
 		if !strings.Contains(arg, ":") {
-			flag.PrintDefaults()
-			return kt, nil
+			return nil, fmt.Errorf("invalid user format %q, expected PREFIX:USER (e.g. gh:octocat)", arg)
 		}
 
 		srcName, id, _ := strings.Cut(arg, ":")
 		src, ok := sshgetid.SourceTable[srcName]
 		if !ok {
-			flag.PrintDefaults()
-			return kt, nil
+			return nil, fmt.Errorf("unknown source %q, valid sources: %v", srcName, knownSources())
 		}
 
 		data, err := src.Get(id)
@@ -150,4 +150,12 @@ func getRemoteKeys() (*sshgetid.KeyTable, error) {
 	}
 
 	return kt, nil
+}
+
+func knownSources() []string {
+	var names []string
+	for k := range sshgetid.SourceTable {
+		names = append(names, k)
+	}
+	return names
 }

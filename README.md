@@ -1,6 +1,12 @@
 ssh-get-id
 ===
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/mengzhuo/ssh-get-id.svg)](https://pkg.go.dev/github.com/mengzhuo/ssh-get-id)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mengzhuo/ssh-get-id)](https://goreportcard.com/report/github.com/mengzhuo/ssh-get-id)
+[![codecov](https://codecov.io/gh/mengzhuo/ssh-get-id/branch/main/graph/badge.svg)](https://codecov.io/gh/mengzhuo/ssh-get-id)
+[![CI](https://github.com/mengzhuo/ssh-get-id/actions/workflows/go.yml/badge.svg)](https://github.com/mengzhuo/ssh-get-id/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Same as ssh-import-id (also inspired by), but don't require ssh or python!
 
 Works on Windows and Mac too!

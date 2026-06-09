@@ -22,9 +22,19 @@
 ```bash
 # Build
 go build -o ssh-get-id ./cmd/ssh-get-id/
+# or
+make build
 
 # Run unit tests
 go test ./...
+# or
+make test
+
+# Test with coverage
+make cover
+
+# Lint
+make lint
 
 # Run integration tests (require pre-built binary + network)
 go build -o /usr/local/bin/ssh-get-id ./cmd/ssh-get-id/
@@ -41,14 +51,17 @@ bash ./tests/gh.sh
   - `tests/gh.sh`: writes to `~/.ssh/authorized_keys`, then verifies with grep.
 - Run unit tests before integration: `go test ./... && go build ... && bash tests/*.sh`
 
+## Linting
+
+- Config: `.golangci.yml` (errcheck, staticcheck, govet, revive, misspell, etc.)
+- CI runs `golangci/golangci-lint-action@v7` on every push/PR.
+
 ## Gotchas
 
 - **`-k`**: skip TLS certificate verification (sets `InsecureSkipVerify` on the HTTP client). Use only for self-signed/internal CAs.
 - **`-l NONE`** (uppercase): special value to skip loading local keys entirely. Different from empty string (which uses default path).
 - **`-o -`**: output to stdout instead of a file.
 - **Source prefixes are case-sensitive** — `gh:` works, `GH:` doesn't.
-- `HTTPSource.Get` does NOT check HTTP status codes — it reads the body regardless.
-- `getRemoteKeys` prints `flag.PrintDefaults()` on invalid args but returns nil error (inconsistent with the error-returning signature).
 
 ## Adding a new identity source
 
@@ -66,5 +79,5 @@ The `%s` in the URL template is replaced with the user ID.
 ## CI
 
 - GitHub Actions: `.github/workflows/go.yml`
-- On push/PR to `main`: builds binary, runs shell tests
+- On push/PR to `main`: lint → unit tests + coverage → Codecov upload → build → integration tests
 - GoReleaser (`.goreleaser.yaml`): cross-compiles for linux/windows/darwin/freebsd/netbsd/openbsd with UPX compression

@@ -34,8 +34,15 @@ func (hs HTTPSource) Get(id string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
+	defer func() { _ = resp.Body.Close() }()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("%s returned %d: %s", gu.Host, resp.StatusCode, body)
+	}
+	return body, nil
 }
 
 // SourceTable maps short prefixes to their Source implementation.

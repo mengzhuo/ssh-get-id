@@ -16,8 +16,19 @@ jobs:
         with:
           go-version-file: 'go.mod'
 
+      - name: Lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: latest
+
       - name: Unit tests
-        run: go test ./... -count=1
+        run: go test ./... -count=1 -coverprofile=coverage.txt -covermode=atomic
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./coverage.txt
+          flags: unittests
 
       - name: Build
         run: go build -o /usr/local/bin/ssh-get-id ./cmd/ssh-get-id/

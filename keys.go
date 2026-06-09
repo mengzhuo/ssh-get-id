@@ -1,3 +1,4 @@
+// Package sshgetid provides SSH public key fetching, parsing, and merging.
 package sshgetid
 
 import (
