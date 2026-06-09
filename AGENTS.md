@@ -4,7 +4,7 @@
 
 `ssh-get-id` — single-binary Go CLI that fetches SSH public keys from online identity providers and merges them into `authorized_keys`.
 
-- **Module**: `github.com/mengzhuo/ssh-get-id` (Go 1.23)
+- **Module**: `github.com/mengzhuo/ssh-get-id` (Go 1.25)
 - **Deps**: only `golang.org/x/crypto` (SSH key parsing)
 - **License**: MIT
 
