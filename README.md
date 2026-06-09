@@ -37,9 +37,10 @@ Usage of ssh-get-id [-h] [-o FILE] USERID [USERID ...]:
   -o string
         Destination of keys: default ~/.ssh/authorized_keys, - for stdout
   -w    Do not warn about imported keys
+  -k    Skip TLS certificate verification (insecure)
 ```
 
 Build from source
 ```
-go build -o ssh-get-id main.go
+go build -o ssh-get-id ./cmd/ssh-get-id/
 ```

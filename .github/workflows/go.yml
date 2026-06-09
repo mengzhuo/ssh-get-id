@@ -21,11 +21,14 @@ jobs:
       with:
         go-version: '1.23'
 
+    - name: Unit tests
+      run: go test ./... -count=1
+
     - name: Build
       run: |
-        go build -o /usr/local/bin/ssh-get-id main.go
+        go build -o /usr/local/bin/ssh-get-id ./cmd/ssh-get-id/
 
-    - name: Test
+    - name: Integration tests
       run: |
         bash ./tests/run.sh
         bash ./tests/gh.sh
