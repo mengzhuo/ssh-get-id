@@ -22,7 +22,7 @@ jobs:
           version: latest
 
       - name: Unit tests
-        run: go test ./... -count=1 -coverprofile=coverage.txt -covermode=atomic
+        run: go test ./... -count=1 -coverprofile=coverage.txt -covermode=atomic -coverpkg=github.com/mengzhuo/ssh-get-id
 
       - name: Upload coverage
         uses: codecov/codecov-action@v5
