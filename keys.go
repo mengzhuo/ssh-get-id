@@ -11,9 +11,9 @@ import (
 
 // Entry represents a single authorized key entry with its parsed key, comment, and options.
 type Entry struct {
-	Key     ssh.PublicKey
-	Comment string
-	Options []string
+	Key     ssh.PublicKey // Parsed SSH public key.
+	Comment string        // Comment from the authorized_keys line.
+	Options []string      // SSH options (e.g., no-port-forwarding).
 }
 
 // String returns the authorized_keys format line for this entry.
@@ -27,7 +27,7 @@ func (e *Entry) String() string {
 
 // KeyTable holds a deduplicated set of authorized key entries.
 type KeyTable struct {
-	List []*Entry
+	List []*Entry // All entries in insertion order.
 	m    map[string]*Entry
 }
 

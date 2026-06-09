@@ -26,6 +26,11 @@ var (
 func main() {
 	flag.Parse()
 
+	if flag.NArg() == 0 {
+		flag.Usage()
+		os.Exit(2)
+	}
+
 	if *insecure {
 		sshgetid.HTTPClient = &http.Client{
 			Transport: &http.Transport{
