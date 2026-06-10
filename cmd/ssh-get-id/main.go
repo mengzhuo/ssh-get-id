@@ -32,11 +32,9 @@ func main() {
 	}
 
 	if *insecure {
-		sshgetid.HTTPClient = &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			},
-		}
+		tr := http.DefaultTransport.(*http.Transport).Clone()
+		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+		sshgetid.HTTPClient = &http.Client{Transport: tr}
 	}
 
 	sshgetid.Warn = func(e *sshgetid.Entry) {
